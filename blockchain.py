@@ -108,6 +108,15 @@ def new_transaction():
     response = {'message': f' Transaction will be added to block {index}'}
     return jsonify(response), 201
 
+@app.route('/chain', methods=['GET'])
+def full_chain():
+    response = {
+        'chain': blockchain.chain,
+        'length': len(blockchain.chain)
+    }
+    return jsonify(response), 200
+
+
 
 if __name__ == '__main__':
     port = os.environ.get('PORT')
