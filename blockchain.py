@@ -96,6 +96,18 @@ def mine():
 
     return jsonify(response), 200
 
+@app.route('/transactions/new', methods=['POST'])
+def new_transaction():
+    values = request.get_json()
+    required = ['sender', 'recipient', 'amount']
+    if not all (k in values for k in required):
+        return 'Missing Values', 400
+
+    index = blockchain.new_transaction(values['sender'], values['recipient'], values['amount'])
+
+    response = {'message': f' Transaction will be added to block {index}'}
+    return jsonify(response), 201
+
 
 if __name__ == '__main__':
     port = os.environ.get('PORT')
